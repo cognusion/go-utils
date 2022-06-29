@@ -23,12 +23,14 @@ Package ioutil provides drop-in replacements for io/ioutil mechanations
 
 
 
-## <a name="ReadAll">func</a> [ReadAll](https://github.com/cognusion/go-utils/tree/master/ioutil/readall.go?s=343:390#L23)
+## <a name="ReadAll">func</a> [ReadAll](https://github.com/cognusion/go-utils/tree/master/ioutil/readall.go?s=286:333#L12)
 ``` go
 func ReadAll(r io.Reader) (b []byte, err error)
 ```
-ReadAll is a custom version of io/ioutil.ReadAll() that uses a sync.Pool of bytes.Buffer to rock the reading,
-with Zero allocs and 7x better performance
+ReadAll is now just a shim for ``ioutil.ReadAll``.
+An interesting data race caused a bunch of examination that showed it
+unsafe with small buffers under high rates of churn, and fixing it
+made performance worse than the stock.
 
 
 
